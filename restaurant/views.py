@@ -16,24 +16,28 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-class BookingView(APIView):
+# class BookingView(APIView):
 
-    def get(self, request):
-        print(request.GET)
-        items = models.Booking.objects.all()
-        serializer = serializers.BookingSerializer(items, many=True)
+#     def get(self, request):
+#         items = models.Booking.objects.all()
+#         serializer = serializers.BookingSerializer(items, many=True)
 
-        return Response(serializer.data)  # Returns JSON
+#         return Response(serializer.data)  # Returns JSON
 
-    def post(self, request):
-        serializer = serializers.BookingSerializer(data=request.data)
+#     def post(self, request):
+#         serializer = serializers.BookingSerializer(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_201_CREATED)
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save()
+#             return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_201_CREATED)
 
 
-class BookingViewSet(viewsets.ModelViewSet):
+# class BookingViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+#     queryset = models.Booking.objects.all()
+#     serializer_class = serializers.BookingSerializer
+
+class BookingViewSet(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = models.Booking.objects.all()
     serializer_class = serializers.BookingSerializer
